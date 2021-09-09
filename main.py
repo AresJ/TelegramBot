@@ -18,7 +18,7 @@ def getStocks(message):
   stocks = ['gme', 'amc', 'nok']
   stockData = []
   for stock in stocks:
-    data = yf.download(tickers = stock, period='2d', interval='1d')
+    data = yf.download(tickers=stock, period='2d', interval='1d')
     data = data.reset_index()
     response += f"-----{stock}-----\n"
     stockData.append([stock])
@@ -27,7 +27,7 @@ def getStocks(message):
       stockPosition = len(stockData) - 1
       price = round(row['Close'], 2)
       formatDate = row['Date'].strftime('%m/%d')
-      response += f"{formatDate}: {price} \n"
+      response += f"{formatDate}: {price}\n"
       stockData[stockPosition].append(price)
       columns.append(formatDate)
     print()
@@ -39,6 +39,8 @@ def getStocks(message):
   print(response)
   bot.send_message(message.chat.id, response) 
 
+
+'''
 @bot.message_handler(commands=['wsb'])
 def get_stocks(message):
   response = ""
@@ -65,6 +67,8 @@ def get_stocks(message):
   response += "\nStock Data"
   print(response)
   bot.send_message(message.chat.id, response)
+
+''' 
 
         
 bot.polling()
