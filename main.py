@@ -1,17 +1,21 @@
 import os
 import telebot
 import yfinance as yf
+
 my_secret = os.environ['API_KEY']
 bot = telebot.TeleBot(my_secret)
 
+
 @bot.message_handler(commands=['Greet'])
 def greet(message):
-  bot.reply_to(message, "Hey, how's it going?!")
+    bot.reply_to(message, "Hey, how's it going?!")
+
 
 @bot.message_handler(commands=['hello?'])
 def hello(message):
-  bot.send_message(message.chat.id, "Hey.")
+    bot.send_message(message.chat.id, "Hey.")
 
+''''
 @bot.message_handler(commands=['wsb'])
 def getStocks(message):
   response = ""
@@ -32,15 +36,14 @@ def getStocks(message):
       columns.append(formatDate)
     print()
 
-  response = f"{columns[0] : <10}{columns[1] : ^10}{columns[2] : >10}\n"
+  response = f"{columns[0] : <8}{columns[1] : 8}{columns[2] : >8}\n"
   for row in stockData:
-    response += f"{row:[0] : <10}{row[1] : ^10}{row[2] : >10}\n"
+    response += f"{row:[0] : <8}{row[1] : ^8}{row[2] : >8}\n"
   response += "\nStock Data"
   print(response)
-  bot.send_message(message.chat.id, response) 
-
-
+  bot.send_message(message.chat.id, response)
 '''
+
 @bot.message_handler(commands=['wsb'])
 def get_stocks(message):
   response = ""
@@ -68,9 +71,6 @@ def get_stocks(message):
   print(response)
   bot.send_message(message.chat.id, response)
 
-''' 
 
-        
+
 bot.polling()
-
-
