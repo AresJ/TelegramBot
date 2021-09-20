@@ -71,6 +71,25 @@ def get_stocks(message):
   print(response)
   bot.send_message(message.chat.id, response)
 
+def stockRequest(message):
+  request = message.text.split()
+  if len(request) < 2 or request[0].lower() not in "price":
+    return False
+  else: 
+    return True
+
+@bot.message_handler(func=stockRequest)
+def sendPrice(message):
+  request = message.text.split()[1]
+  data = yf.download(tickers = request, period ='5m', interval='1m')
+  if data.size > 0:
+    data = data.reset_index()
+    data["format_date"] = data['Datetime'].dt.strftime('%m/%d %I:%M %p')
+    data.set_index('format_date', inplace=True)
+    print(data.to_string())
+    bot.send_message(message.chat.id, data['Close'].to_string(header=False))
+  else:
+    bot.send_message(message.chat.id, "No data?!")
 
 
 bot.polling()
